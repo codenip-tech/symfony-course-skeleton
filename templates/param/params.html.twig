@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {{ name }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {% if null != email %}
+                    {{ email }}
+                {% else %}
+                    "No existe el email"
+                {% endif %}
+            </div>
+        </div>
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+            {% for item in items %}
+                <li class="list-group-item">{{ item }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    </div>
+{% endblock %}

@@ -14,7 +14,9 @@
         "symfony/framework-bundle": "5.4.*",
         "symfony/monolog-bundle": "^3.7",
         "symfony/runtime": "5.4.*",
-        "symfony/yaml": "5.4.*"
+        "symfony/webpack-encore-bundle": "^1.13",
+        "symfony/yaml": "5.4.*",
+        "twig/twig": "^3.0"
     },
     "config": {
         "allow-plugins": {
