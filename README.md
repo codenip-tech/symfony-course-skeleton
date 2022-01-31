@@ -1,6 +1,6 @@
-# Symfony Base Repository
+# Symfony Course Skeleton
 
-This repository contains the basic configuration to run Symfony applications with MySQL database
+This repository contains the code for the Symfony Beginner's guide!
 
 ## Content
 - PHP container running version 8.1.1
