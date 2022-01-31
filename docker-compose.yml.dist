@@ -1,8 +1,8 @@
 version: '3.5'
 
 services:
-  symfony-app:
-    container_name: symfony-app
+  symfony-course-skeleton-app:
+    container_name: symfony-course-skeleton-app
     build:
       context: ./docker
       args:
@@ -16,16 +16,16 @@ services:
     environment:
       XDEBUG_CLIENT_HOST: 172.17.0.1
       XDEBUG_CLIENT_PORT: 9003
-      PHP_IDE_CONFIG: serverName=symfony-server
+      PHP_IDE_CONFIG: serverName=symfony-course-skeleton-server
     ports:
       - '1000:8000'
     networks:
-      - symfony-network
+      - symfony-course-skeleton-network
     depends_on:
-      - symfony-mysql
+      - symfony-course-skeleton-mysql
 
-  symfony-mysql:
-    container_name: symfony-mysql
+  symfony-course-skeleton-mysql:
+    container_name: symfony-course-skeleton-mysql
     image: mysql:8.0.26
     ports:
       - '3336:3306'
@@ -33,14 +33,14 @@ services:
       MYSQL_DATABASE: symfony
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - symfony-mysql-data:/var/lib/mysql
+      - symfony-course-skeleton-mysql-data:/var/lib/mysql
     networks:
-      - symfony-network
+      - symfony-course-skeleton-network
     command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci' ]
 
 networks:
-  symfony-network:
+  symfony-course-skeleton-network:
 
 volumes:
-  symfony-mysql-data:
+  symfony-course-skeleton-mysql-data:
 
