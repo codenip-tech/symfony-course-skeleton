@@ -1,1 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
+
+.body-container {
+  flex: 1;
+  /* needed to prevent pages with a very small height and browsers not supporting flex */
+  min-height: 600px
+}
