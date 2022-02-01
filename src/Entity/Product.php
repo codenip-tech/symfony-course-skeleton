@@ -6,31 +6,33 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[ORM\Index(columns: ['sku'], name: 'IDX_product_sku')]
+#[ORM\Index(columns: ['price'], name: 'IDX_product_price')]
 class Product
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'string', columnDefinition: 'CHAR(36) NOT NULL')]
-    private string $id;
+    private ?string $id;
 
     #[ORM\Column(type: 'string', length: 100)]
-    private string $name;
+    private ?string $name;
 
     #[ORM\Column(type: 'string', length: 50)]
-    private string $sku;
+    private ?string $sku;
 
-    #[ORM\Column(type: 'integer')]
-    private int $price;
+    #[ORM\Column(type: 'float', precision: 8, scale: 2)]
+    private ?float $price;
 
     #[ORM\Column(type: 'datetime')]
-    private \DateTimeInterface $createdOn;
+    private ?\DateTimeInterface $createdOn;
 
-    public function getId(): string
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -42,7 +44,7 @@ class Product
         return $this;
     }
 
-    public function getSku(): string
+    public function getSku(): ?string
     {
         return $this->sku;
     }
@@ -54,19 +56,19 @@ class Product
         return $this;
     }
 
-    public function getPrice(): int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): self
+    public function setPrice(float $price): self
     {
         $this->price = $price;
 
         return $this;
     }
 
-    public function getCreatedOn(): \DateTimeInterface
+    public function getCreatedOn(): ?\DateTimeInterface
     {
         return $this->createdOn;
     }
