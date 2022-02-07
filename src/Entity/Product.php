@@ -13,7 +13,7 @@ class Product
 {
     #[ORM\Id]
     #[ORM\Column(type: 'string', columnDefinition: 'CHAR(36) NOT NULL')]
-    private ?string $id;
+    private string $id;
 
     #[ORM\Column(type: 'string', length: 100)]
     private ?string $name;
@@ -21,11 +21,15 @@ class Product
     #[ORM\Column(type: 'string', length: 50)]
     private ?string $sku;
 
-    #[ORM\Column(type: 'float', precision: 8, scale: 2)]
-    private ?float $price;
+    #[ORM\Column(type: 'integer')]
+    private ?int $price;
 
     #[ORM\Column(type: 'datetime')]
-    private ?\DateTimeInterface $createdOn;
+    private \DateTimeInterface $createdOn;
+
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Category $category;
 
     public function __construct()
     {
@@ -33,7 +37,7 @@ class Product
         $this->createdOn = new \DateTime();
     }
 
-    public function getId(): ?string
+    public function getId(): string
     {
         return $this->id;
     }
@@ -74,14 +78,19 @@ class Product
         return $this;
     }
 
-    public function getCreatedOn(): ?\DateTimeInterface
+    public function getCreatedOn(): \DateTimeInterface
     {
         return $this->createdOn;
     }
 
-    public function setCreatedOn(\DateTimeInterface $createdOn): self
+    public function getCategory(): ?Category
     {
-        $this->createdOn = $createdOn;
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
