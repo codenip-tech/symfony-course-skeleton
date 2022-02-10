@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ORM\Index(columns: ['sku'], name: 'IDX_product_sku')]
@@ -15,18 +16,35 @@ class Product
     #[ORM\Column(type: 'string', columnDefinition: 'CHAR(36) NOT NULL')]
     private string $id;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: 'Product name has to be at least {{ limit }} characters',
+        maxMessage: 'Product name has to be maximum {{ limit }} characters'
+    )]
     #[ORM\Column(type: 'string', length: 100)]
     private ?string $name;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Product name has to be at least {{ limit }} characters',
+        maxMessage: 'Product name has to be maximum {{ limit }} characters'
+    )]
     #[ORM\Column(type: 'string', length: 50)]
     private ?string $sku;
 
+    #[Assert\NotBlank]
+    #[Assert\PositiveOrZero]
     #[ORM\Column(type: 'integer')]
     private ?int $price;
 
     #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $createdOn;
 
+    #[Assert\NotBlank]
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private Category $category;
