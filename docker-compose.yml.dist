@@ -38,9 +38,17 @@ services:
       - symfony-course-skeleton-network
     command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci' ]
 
+  symfony-course-skeleton-mailer:
+    container_name: symfony-course-skeleton-mailer
+    image: schickling/mailcatcher
+    ports:
+      - '1025:1025'
+      - '1080:1080'
+    networks:
+      - symfony-course-skeleton-network
+
 networks:
   symfony-course-skeleton-network:
 
 volumes:
   symfony-course-skeleton-mysql-data:
-

@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/category')]
@@ -23,7 +25,7 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/new', name: 'category_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -32,6 +34,21 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($category);
             $entityManager->flush();
+
+            $email = (new Email())
+                ->from('admin@api.com')
+                ->to('juan@api.com')
+                ->subject('New category has been created!')
+                ->text('New category has been created!')
+                ->html(
+                    $this->renderView('emails/new-category.html.twig', [
+                        'id' => $category->getId(),
+                        'name' => $category->getName(),
+                        'created_on' => $category->getCreatedOn()->format('Y-m-d H:i:s'),
+                    ])
+                );
+
+            $mailer->send($email);
 
             return $this->redirectToRoute('category_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -71,7 +88,7 @@ class CategoryController extends AbstractController
     #[Route('/{id}', name: 'category_delete', methods: ['POST'])]
     public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $entityManager->remove($category);
             $entityManager->flush();
         }
