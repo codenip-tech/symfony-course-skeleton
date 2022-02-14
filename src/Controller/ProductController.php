@@ -14,11 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/product')]
 class ProductController extends AbstractController
 {
-    #[Route('/', name: 'product_index', methods: ['GET'])]
-    public function index(ProductRepository $productRepository): Response
+    #[Route('/', name: 'product_index', defaults: ['page' => '1'], methods: ['GET'])]
+    #[Route('/page/{page<[0-9]\d*>}', name: 'product_index_paginated', methods: ['GET'])]
+    public function index(ProductRepository $productRepository, int $page): Response
     {
+        $latestProducts = $productRepository->findLatest($page);
+
         return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'paginator' => $latestProducts,
         ]);
     }
 
@@ -71,7 +74,7 @@ class ProductController extends AbstractController
     #[Route('/{id}', name: 'product_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
             $entityManager->remove($product);
             $entityManager->flush();
         }

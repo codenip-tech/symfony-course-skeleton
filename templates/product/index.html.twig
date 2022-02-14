@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for product in products %}
+        {% for product in paginator.results %}
             <tr>
                 <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
@@ -36,6 +36,42 @@
                 <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
+
+{#        <nav aria-label="product paginator">#}
+{#            <ul class="pagination">#}
+{#                <li class="page-item"><a class="page-link" href="#">Previous</a></li>#}
+{#                <li class="page-item"><a class="page-link" href="#">1</a></li>#}
+{#                <li class="page-item"><a class="page-link" href="#">2</a></li>#}
+{#                <li class="page-item"><a class="page-link" href="#">3</a></li>#}
+{#                <li class="page-item"><a class="page-link" href="#">Next</a></li>#}
+{#            </ul>#}
+{#        </nav>#}
+
+        {% if paginator.hasToPaginate %}
+            <div class="navigation text-center">
+                <ul class="pagination">
+                    {% if paginator.hasPreviousPage %}
+                        <li class="page-item"><a class="page-link" href="{{ path('product_index_paginated', {page: paginator.previousPage}) }}" rel="previous"><i class="fa fw fa-long-arrow-left"></i> {{ 'Previous' }}</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a href="#" class="page-link"><i class="fa fw fa-arrow-left"></i> {{ 'Previous' }}</a></li>
+                    {% endif %}
+
+                    {% for i in 1..paginator.lastPage %}
+                        {% if i == paginator.currentPage %}
+                            <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="{{ path('product_index_paginated', {page: i}) }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if paginator.hasNextPage %}
+                        <li class="page-item"><a class="page-link" href="{{ path('product_index_paginated', {page: paginator.nextPage}) }}" rel="next">{{ 'Next' }} <i class="fa fw fa-arrow-right"></i></a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">{{ 'Next' }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
         </tbody>
     </table>
 
