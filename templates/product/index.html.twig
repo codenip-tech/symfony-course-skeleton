@@ -22,7 +22,7 @@
             <tr>
                 <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
-                <td>{{ product.category.name }}</td>
+                <td><a href="{{ path('category_show', {id: product.category.id}) }}">{{ product.category.name }}</a></td>
                 <td>{{ product.sku }}</td>
                 <td>{{ (product.price / 100)|format_currency('EUR') }}</td>
                 <td>{{ product.createdOn ? product.createdOn|date('Y-m-d H:i:s') : '' }}</td>
