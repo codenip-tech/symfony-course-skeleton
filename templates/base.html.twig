@@ -23,9 +23,13 @@
                         </a>
 
                         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                            <li><a href="{{ path('homepage') }}" class="nav-link px-2 {{ app.request.pathInfo == '/' ? 'text-white' : 'text-secondary' }}">Home</a></li>
-                            <li><a href="{{ path('category_index') }}" class="nav-link px-2 {{ app.request.pathInfo == '/category/' ? 'text-white' : 'text-secondary' }}">Categories</a></li>
-                            <li><a href="{{ path('product_index') }}" class="nav-link px-2 {{ app.request.pathInfo == '/product/' ? 'text-white' : 'text-secondary' }}">Products</a></li>
+                            <li><a href="{{ path('homepage') }}" class="nav-link px-2 {{ app.request.pathInfo == '/' ? 'text-white' : 'text-secondary' }}">{{ 'menu.item.home'|trans }}</a></li>
+                            <li><a href="{{ path('category_index') }}" class="nav-link px-2 {{ app.request.pathInfo == '/category/' ? 'text-white' : 'text-secondary' }}">{{ 'menu.item.categories'|trans }}</a></li>
+                            <li><a href="{{ path('product_index') }}" class="nav-link px-2 {{ app.request.pathInfo == '/product/' ? 'text-white' : 'text-secondary' }}">{{ 'menu.item.products'|trans }}</a></li>
+                        </ul>
+                        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                            <li><a class="nav-link px-2 text-secondary" href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: 'en'})) }}">{{ 'menu.item.lang.en'|trans }}</a></li>
+                            <li><a class="nav-link px-2 text-secondary" href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: 'es'})) }}">{{ 'menu.item.lang.es'|trans }}</a></li>
                         </ul>
                     </div>
                 </div>

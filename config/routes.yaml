@@ -8,8 +8,11 @@
 #  methods: [ GET ]
 
 homepage:
-  path: /
+  path: /{_locale}
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
   methods: [GET]
+  requirements:
+    _locale: '%app_locales%'
   defaults:
     template: defaults/homepage.html.twig
+    _locale: '%locale%'
