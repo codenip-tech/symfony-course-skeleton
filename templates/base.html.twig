@@ -31,6 +31,9 @@
                             <li><a class="nav-link px-2 text-secondary" href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: 'en'})) }}">{{ 'menu.item.lang.en'|trans }}</a></li>
                             <li><a class="nav-link px-2 text-secondary" href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: 'es'})) }}">{{ 'menu.item.lang.es'|trans }}</a></li>
                         </ul>
+                        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                            <li><a href="{{ path('app_logout') }}" class="nav-link px-2 text-secondary">Logout</a></li>
+                        </ul>
                     </div>
                 </div>
             </header>

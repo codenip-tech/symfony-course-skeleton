@@ -7,12 +7,22 @@
 #  controller: App\Controller\HealthCheckController
 #  methods: [ GET ]
 
-homepage:
-  path: /{_locale}
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-  methods: [GET]
-  requirements:
-    _locale: '%app_locales%'
+root:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
   defaults:
-    template: defaults/homepage.html.twig
-    _locale: '%locale%'
+    route: login
+
+#homepage:
+#  path: /{_locale}/home
+#  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+#  methods: [GET]
+#  requirements:
+#    _locale: '%app_locales%'
+#  defaults:
+#    template: defaults/homepage.html.twig
+#    _locale: '%locale%'
+
+app_logout:
+  path: /logout
+  methods: GET
