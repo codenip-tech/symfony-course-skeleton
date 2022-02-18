@@ -18,21 +18,24 @@
             <header class="p-3 bg-dark text-white">
                 <div class="container">
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
-                        </a>
-
-                        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                            <li><a href="{{ path('homepage') }}" class="nav-link px-2 {{ app.request.pathInfo == '/' ? 'text-white' : 'text-secondary' }}">{{ 'menu.item.home'|trans }}</a></li>
-                            <li><a href="{{ path('category_index') }}" class="nav-link px-2 {{ app.request.pathInfo == '/category/' ? 'text-white' : 'text-secondary' }}">{{ 'menu.item.categories'|trans }}</a></li>
-                            <li><a href="{{ path('product_index') }}" class="nav-link px-2 {{ app.request.pathInfo == '/product/' ? 'text-white' : 'text-secondary' }}">{{ 'menu.item.products'|trans }}</a></li>
+                        <ul class="nav col-6">
+                            {% if app.user %}
+                                <li><a href="{{ path('homepage') }}" class="nav-link px-2 {{ app.request.pathInfo == '/' ? 'text-white' : 'text-secondary' }}">{{ 'menu.item.home'|trans }}</a></li>
+                                <li><a href="{{ path('category_index') }}" class="nav-link px-2 {{ app.request.pathInfo == '/category/' ? 'text-white' : 'text-secondary' }}">{{ 'menu.item.categories'|trans }}</a></li>
+                                <li><a href="{{ path('product_index') }}" class="nav-link px-2 {{ app.request.pathInfo == '/product/' ? 'text-white' : 'text-secondary' }}">{{ 'menu.item.products'|trans }}</a></li>
+                            {% endif %}
                         </ul>
-                        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                        <ul class="nav col-4">
                             <li><a class="nav-link px-2 text-secondary" href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: 'en'})) }}">{{ 'menu.item.lang.en'|trans }}</a></li>
                             <li><a class="nav-link px-2 text-secondary" href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: 'es'})) }}">{{ 'menu.item.lang.es'|trans }}</a></li>
                         </ul>
-                        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                            <li><a href="{{ path('app_logout') }}" class="nav-link px-2 text-secondary">Logout</a></li>
+                        <ul class="nav col-2">
+                            {% if app.user %}
+                                <li><a href="{{ path('app_logout') }}" class="nav-link px-2 text-secondary">Logout</a></li>
+                            {% else %}
+                                <li><a href="{{ path('login') }}" class="nav-link px-2 text-secondary">Login</a></li>
+                                <li><a href="{{ path('app_register') }}" class="nav-link px-2 text-secondary">Register</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
